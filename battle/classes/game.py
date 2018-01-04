@@ -75,6 +75,14 @@ class Person:
             print("\t" + str(i) + ". " + item["item"].name + ": " + item["item"].description + " (" + str(item["quantity"]) + ")")
             i += 1
 
+    def choose_target(self, enemies):
+        i = 1
+        for enemy in enemies:
+            print("\t" + str(i) + ". " + enemy.name)
+            i += 1
+        choice = int(input("Choose tarrget: ") - 1)
+        return choice
+
     def get_enemy_stats(self):
         hpbar = float(self.hp) / self.maxhp * 44
 
