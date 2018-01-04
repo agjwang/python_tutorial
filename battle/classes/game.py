@@ -11,7 +11,8 @@ class bcolors:
     UNDERLINE = '033[4m'
 
 class Person:
-    def __init__(self, hp, mp, atk, df, magic, items):
+    def __init__(self, name, hp, mp, atk, df, magic, items):
+        self.name = name
         self.maxhp = hp
         self.hp = hp
         self.maxmp = mp
@@ -53,7 +54,8 @@ class Person:
         self.mp -= cost
 
     def choose_action(self):
-        print("\n" + bcolors.OKBLUE + bcolors.BOLD + "ACTIONS: " + bcolors.ENDC)
+        print("\n" + bcolors.BOLD + self.name + bcolors.ENDC)
+        print(bcolors.OKBLUE + bcolors.BOLD + "ACTIONS: " + bcolors.ENDC)
         i = 1
         for item in self.actions:
             print("\t" + str(i) + ": " + item)
@@ -72,3 +74,54 @@ class Person:
         for item in self.items:
             print("\t" + str(i) + ". " + item["item"].name + ": " + item["item"].description + " (" + str(item["quantity"]) + ")")
             i += 1
+
+    def get_enemy_stats(self):
+        hpbar = float(self.hp) / self.maxhp * 44
+
+        hp = ""
+        for i in range(0, 44):
+            if i < hpbar:
+                hp += u'\u2588'
+            else:
+                hp += " "
+
+        hp_str = str(self.hp) + "/" + str(self.maxhp)
+        while len(hp_str) < 9:
+            hp_str = " " + hp_str
+
+        print("                      ____________________________________________")
+        print(bcolors.BOLD + self.name + "      " + hp_str + " |" +
+              bcolors.FAIL + hp + bcolors.ENDC +
+              "|")
+
+    def get_stats(self):
+        hpbar = float(self.hp) / self.maxhp * 25
+        mpbar = float(self.mp) / self.maxmp * 10
+
+        hp = ""
+        for i in range(0, 25):
+            if i < hpbar:
+                hp += u'\u2588'
+            else:
+                hp += " "
+
+        mp = ""
+        for i in range(0, 10):
+            if i < mpbar:
+                mp += u'\u2588'
+            else:
+                mp += " "
+
+        hp_str = str(self.hp) + "/" + str(self.maxhp)
+        while len(hp_str) < 7:
+            hp_str = " " + hp_str
+
+        mp_str = str(self.mp) + "/" + str(self.maxmp)
+        while len(mp_str) < 5:
+            mp_str = " " + mp_str
+
+        print("                      _________________________         __________")
+        print(bcolors.BOLD + self.name + "      " + hp_str + " |" +
+              bcolors.OKGREEN + hp + bcolors.ENDC +
+              "| " + mp_str + " |" +
+              bcolors.OKBLUE + mp + bcolors.ENDC + "|")
